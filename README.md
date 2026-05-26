@@ -136,6 +136,11 @@ O EcoAlerta foi desenvolvido com o objetivo de ajudar comunidades urbanas a comp
 
 ---
 
-# 👨‍💻 Desenvolvedor
+# 👨‍💻 Integrantes:
 
-Projeto desenvolvido por Jefferson Dos Santos Lima Sousa.
+Projeto desenvolvido por 
+Jefferson Dos Santos Lima Sousa
+Gustavo Soares Silva
+Marcos Roberto Leonardo Rodrigues
+Pedro Alves Do Nacimento
+Pedro Henrique de Freitas Belo
