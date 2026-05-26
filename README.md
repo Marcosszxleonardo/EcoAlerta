@@ -1,5 +1,25 @@
 # 🌍 EcoAlerta
 
+## 👨‍🎓 Projeto Acadêmico
+
+O EcoAlerta é um projeto acadêmico desenvolvido com o objetivo de criar uma plataforma colaborativa para registro e compartilhamento de desastres urbanos em tempo real.
+
+---
+
+## 👨‍💻 Integrantes
+
+| Nome |
+|------|
+| Jefferson Dos Santos Lima Sousa |
+| Gustavo Soares Silva |
+| Marcos Roberto Leonardo Rodrigues |
+| Pedro Alves Do Nascimento |
+| Pedro Henrique de Freitas Belo |
+
+---
+
+## 📖 Sobre o Projeto
+
 EcoAlerta é uma plataforma inspirada em uma rede social onde os usuários podem registrar e compartilhar desastres urbanos em tempo real, como:
 
 - ⚡ Queda de energia
@@ -132,15 +152,4 @@ npm run dev
 
 # 🎯 Objetivo do Projeto
 
-O EcoAlerta foi desenvolvido com o objetivo de ajudar comunidades urbanas a compartilharem informações importantes sobre desastres e problemas em suas regiões de forma rápida e acessível.
-
----
-
-# 👨‍💻 Integrantes:
-
-Projeto desenvolvido por 
-Jefferson Dos Santos Lima Sousa
-Gustavo Soares Silva
-Marcos Roberto Leonardo Rodrigues
-Pedro Alves Do Nacimento
-Pedro Henrique de Freitas Belo
+O EcoAlerta foi desenvolvido como projeto acadêmico com o objetivo de aplicar conhecimentos de desenvolvimento web utilizando React + Vite, além de propor uma solução colaborativa para comunicação de desastres urbanos e problemas em regiões específicas.
