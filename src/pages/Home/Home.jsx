@@ -1,5 +1,6 @@
 import "./Home.css";
 import logo from "../../logo/logoeco.png";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -10,8 +11,14 @@ function Home() {
         </div>
 
         <div className="headerButtons">
-          <button className="btn">Entrar</button>
-          <button className="btn">Cadastrar</button>
+          <Link to="/login" className="btn">
+  Entrar
+</Link>
+
+          <Link to="/cadastro" className="btn">
+            Cadastrar
+          </Link>
+
           <button className="btn">Anônimo</button>
         </div>
       </header>
@@ -24,12 +31,15 @@ function Home() {
         </div>
 
         <p className="subtitle">
-         <strong>Conectando pessoas em tempo real para informar e prevenir desastres urbanos.</strong> 
+          <strong>
+            Conectando pessoas em tempo real para informar e prevenir desastres
+            urbanos.
+          </strong>
         </p>
 
         <p>
-          O EcoAlerta é uma plataforma colaborativa desenvolvida com React e Vite
-          para facilitar o compartilhamento rápido de ocorrências urbanas,
+          O EcoAlerta é uma plataforma colaborativa desenvolvida com React e
+          Vite para facilitar o compartilhamento rápido de ocorrências urbanas,
           ajudando comunidades a se manterem informadas e seguras.
         </p>
 
