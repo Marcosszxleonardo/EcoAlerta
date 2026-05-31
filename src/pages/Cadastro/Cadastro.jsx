@@ -38,7 +38,7 @@ function Cadastro() {
           </button>
 
           <a href="/">
-            Já possui uma conta? Entrar
+            Já possui uma conta? Clique Entrar
           </a>
 
         </form>
