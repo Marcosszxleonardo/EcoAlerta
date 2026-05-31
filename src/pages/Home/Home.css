@@ -1,0 +1,164 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #eef2ef;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.home {
+  min-height: 100vh;
+}
+
+/* NAVBAR */
+
+.header {
+  height: 85px;
+  background: linear-gradient(
+    90deg,
+    #edf7ee 0%,
+    #8ad68f 50%,
+    #4caf50 100%
+  );
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.logoArea img {
+    height: 95px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* BOTÕES */
+
+.headerButtons {
+  display: flex;
+  gap: 14px;
+}
+
+.btn {
+  background: white;
+  color: #1f2937;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.btn:hover {
+  background: #4caf50;
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* CARD CENTRAL */
+
+.content {
+ max-width: 750px;
+  margin: 40px auto;
+  padding: 45px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 25px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+
+}
+
+.content h1 {
+  text-align: center;
+  font-size: 3rem;
+  color: #206c2c;
+  margin-bottom: 20px;
+}
+
+/* LINHA COM FOLHA */
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  left: 15%;
+  top: 50%;
+  width: 25%;
+  height: 2px;
+  background: #9ad49f;
+}
+
+.divider::after {
+  content: "";
+  position: absolute;
+  right: 15%;
+  top: 50%;
+  width: 25%;
+  height: 2px;
+  background: #9ad49f;
+}
+
+.divider span {
+  font-size: 28px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.content p {
+  font-size: 1.1rem;
+  line-height: 2;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.content h3 {
+  color: #206c2c;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .headerButtons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .content {
+    margin: 20px;
+    padding: 30px;
+  }
+
+  .content h1 {
+    font-size: 2rem;
+  }
+
+  .divider::before,
+  .divider::after {
+    width: 18%;
+  }
+}
