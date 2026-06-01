@@ -1,8 +1,17 @@
 import "./Login.css";
 import logo from "../../logo/logoeco.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    // futuramente você valida email/senha aqui
+    navigate("/inicial");
+  };
+
   return (
     <div className="login">
       <div className="cardLogin">
@@ -17,7 +26,7 @@ function Login() {
           <div></div>
         </div>
 
-        <form className="formLogin">
+        <form className="formLogin" onSubmit={handleLogin}>
 
           <input
             type="email"

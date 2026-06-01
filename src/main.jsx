@@ -12,6 +12,7 @@ import Home from "./pages/Home/Home";
 import Cadastro from "./pages/Cadastro/Cadastro";
 import Login from "./pages/Login/Login";
 import TelaInicial from "./pages/TelaInicial/TelaInicial";
+import TelaRegistro from "./pages/TelaRegistro/TelaRegistro";
 
 const router = createBrowserRouter([
   {
@@ -28,14 +29,21 @@ const router = createBrowserRouter([
         path: "/cadastro",
         element: <Cadastro />,
       },
-{
-  path: "/login",
-  element: <Login />,
-},
-{
-  path: "/inicial",
-  element: <TelaInicial />,
-},
+
+      {
+        path: "/login",
+        element: <Login />,
+      },
+
+      {
+        path: "/inicial",
+        element: <TelaInicial />,
+      },
+
+      {
+        path: "/registro",
+        element: <TelaRegistro />,
+      },
     ],
   },
 ]);

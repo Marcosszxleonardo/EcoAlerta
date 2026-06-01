@@ -3,6 +3,7 @@ import logoEco from "../../logo/logoeco.png";
 import alerta1 from "../../logo/alerta1.png";
 import alerta2 from "../../logo/alerta2.png";
 import alerta3 from "../../logo/alerta3.png";
+
 import {
     FaHome,
     FaBell,
@@ -17,6 +18,8 @@ import {
     FaExclamationCircle,
 } from "react-icons/fa";
 
+import { Link } from "react-router-dom";
+
 function TelaInicial() {
     return (
         <div className="dashboard">
@@ -30,15 +33,15 @@ function TelaInicial() {
 
                     <nav className="menu">
 
-                       <button className="menuItem">
+                        <Link to="/inicial" className="menuItem">
                             <FaHome />
                             <span>Tela inicial</span>
-                        </button>
+                        </Link>
 
-                        <button className="menuItem">
+                        <Link to="/registro" className="menuItem">
                             <FaBell />
                             <span>Registrar alerta</span>
-                        </button>
+                        </Link>
 
                         <button className="menuItem">
                             <FaPhoneAlt />

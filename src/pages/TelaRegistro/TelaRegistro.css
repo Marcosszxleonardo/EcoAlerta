@@ -6,7 +6,7 @@
 }
 
 body {
-  background: white;
+  background: #f5f6f8;
 }
 
 .dashboard {
@@ -17,14 +17,12 @@ body {
 /* =====================
    SIDEBAR
 ===================== */
-
 .sidebar {
-  width: 230px;
+    width: 230px;
   background: #0c9c2d;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border-right: 1px solid #e0e0e0;
+  height: 100vh;
 }
 
 .logoArea {
@@ -41,7 +39,8 @@ body {
 }
 
 .menu {
-  padding-top: 20px;
+   padding-top: 20px;
+  flex: 1;
 }
 
 .menuItem {
@@ -57,13 +56,15 @@ body {
   font-size: 15px;
   transition: all 0.25s ease;
   border-left: 4px solid transparent;
+  text-decoration: none;
 }
 
 .menuItem svg {
   font-size: 20px;
 }
 
-.menuItem:hover {
+.menuItem:hover,
+.menuItem.active {
   background: rgba(255, 255, 255, 0.15);
   border-left: 4px solid white;
 }
@@ -92,7 +93,6 @@ body {
 .sairBtn svg {
   font-size: 20px;
 }
-
 /* =====================
    MAIN
 ===================== */
@@ -168,139 +168,154 @@ body {
    CONTEÚDO
 ===================== */
 
-.pageContent {
-  flex: 1;
-  display: flex;
-  gap: 24px;
+.registroContainer {
   padding: 30px;
 }
 
-.feed {
-  flex: 1;
-  max-width: 780px;
-}
-
-/* =====================
-   CARD
-===================== */
-
-.alertCard {
+.registroCard {
   background: white;
   border: 1px solid #82c982;
   border-radius: 16px;
-  padding: 22px;
+  padding: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
-.userHeader {
+/* =====================
+   USUÁRIO
+===================== */
+
+.userInfo {
   display: flex;
+  gap: 15px;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
 }
 
 .userIcon {
-  font-size: 42px;
+  font-size: 48px;
   color: #777;
 }
 
-.userHeader h3 {
-  font-size: 18px;
+.userInfo h2 {
   color: #222;
 }
 
-.userHeader span {
-  font-size: 12px;
+.userInfo p {
   color: #666;
-}
-
-.alertCard p {
-  color: #333;
-  line-height: 1.7;
-  font-size: 14px;
+  margin-top: 4px;
 }
 
 /* =====================
-   GALERIA
+   TEXTAREA
 ===================== */
 
-.gallery {
-  display: flex;
-  gap: 14px;
-  margin-top: 18px;
+textarea {
+  width: 100%;
+  height: 220px;
+  margin-top: 25px;
+  resize: none;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 20px;
+  font-size: 15px;
+  outline: none;
 }
 
-.gallery img {
-  width: 180px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 10px;
+.contador {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  color: #777;
+  font-size: 14px;
+}
+
+.linha {
+  height: 1px;
+  background: #dcdcdc;
+  margin: 30px 0;
+}
+
+/* =====================
+   OPÇÕES
+===================== */
+
+.opcoes {
+  display: flex;
+  gap: 25px;
+}
+
+.opcaoCard {
+  flex: 1;
+  border: 1px solid #82c982;
+  border-radius: 16px;
+  padding: 35px 25px;
+  text-align: center;
+  cursor: pointer;
   transition: 0.25s;
 }
 
-.gallery img:hover {
-  transform: scale(1.03);
+.opcaoCard:hover {
+  transform: translateY(-3px);
 }
 
-/* =====================
-   AÇÕES
-===================== */
-
-.actions {
+.iconeBox {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  background: #eef8ef;
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin-top: 18px;
+  justify-content: center;
+  margin: auto;
 }
 
-.actions svg {
-  font-size: 24px;
-  cursor: pointer;
+.iconeBox svg {
+  font-size: 38px;
+  color: #00921f;
 }
 
-.actions svg:first-child {
-  color: #18a83e;
-}
-
-.danger {
-  margin-left: auto;
-  color: #ff3131;
-}
-
-/* =====================
-   ESTATÍSTICAS
-===================== */
-
-.stats {
-  width: 190px;
-  flex-shrink: 0;
-}
-
-.statBox {
-  background: white;
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 14px;
-  text-align: center;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
-}
-
-.statBox small {
-  color: #666;
-  font-size: 11px;
-}
-
-.statBox h2 {
-  font-size: 42px;
-  margin: 8px 0;
+.opcaoCard h3 {
+  margin-top: 20px;
   color: #222;
 }
 
-.statBox span {
-  color: #444;
-  font-size: 14px;
+.opcaoCard p {
+  margin-top: 10px;
+  color: #666;
+  line-height: 1.5;
 }
-.menuItem {
-  text-decoration: none;
+
+/* =====================
+   RESPONSIVO
+===================== */
+
+@media (max-width: 900px) {
+  .opcoes {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .topbar {
+    flex-direction: column;
+    height: auto;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .searchBar {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .registroContainer {
+    padding: 15px;
+  }
 }
