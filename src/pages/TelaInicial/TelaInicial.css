@@ -12,11 +12,8 @@ body {
 .dashboard {
   display: flex;
   min-height: 100vh;
+  align-items: stretch; 
 }
-
-/* =====================
-   SIDEBAR
-===================== */
 
 .sidebar {
   width: 230px;
@@ -25,6 +22,9 @@ body {
   flex-direction: column;
   justify-content: space-between;
   border-right: 1px solid #e0e0e0;
+  position: sticky; 
+  top: 0;
+  height: 100vh; 
 }
 
 .logoArea {
@@ -321,7 +321,6 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  backdrop-filter: blur(8px);
 }
 
 .commentsModal {
@@ -529,7 +528,6 @@ body {
   color: #e63939;
 }
 
-
 /* =====================
    MODAL REPORTAR
 ===================== */
@@ -543,7 +541,6 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 2100;
-  backdrop-filter: blur(6px);
 }
 
 .reportModal {
@@ -663,7 +660,6 @@ body {
     text-align: center;
 }
 
-/* Ajuste nas actions */
 .actions {
     display: flex;
     align-items: center;
@@ -671,7 +667,7 @@ body {
     margin-top: 22px;
 }
 
-/* Responsividade do Modal */
+/* Responsividade */
 @media (max-width: 950px) {
   .commentsModal {
     width: 96%;

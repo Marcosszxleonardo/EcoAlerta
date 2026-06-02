@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../../services/api";
 import "./TelaInicial.css";
 import logoEco from "../../logo/logoeco.png";
 import alerta1 from "../../logo/alerta1.png";
@@ -5,275 +8,147 @@ import alerta2 from "../../logo/alerta2.png";
 import alerta3 from "../../logo/alerta3.png";
 
 import {
-    FaHome,
-    FaBell,
-    FaPhoneAlt,
-    FaClipboardList,
-    FaSignOutAlt,
-    FaSearch,
-    FaRegBell,
-    FaUserCircle,
-    FaArrowCircleUp,
-    FaRegComment,
-    FaExclamationCircle,
-    FaTimes,
+    FaHome, FaBell, FaPhoneAlt, FaClipboardList, FaSignOutAlt,
+    FaSearch, FaRegBell, FaUserCircle, FaArrowCircleUp,
+    FaRegComment, FaExclamationCircle, FaTimes
 } from "react-icons/fa";
 
-import { Link } from "react-router-dom";
-import { useState } from "react";
-
 export default function TelaInicial() {
-    // Estados para Comentários
-    const [showComments, setShowComments] = useState(false);
-    const [newComment, setNewComment] = useState("");
-    const [comments, setComments] = useState([
-        { user: "Maria Silva", time: "agora", text: "Que absurdo! Aqui em Moema também está sem luz há horas 😤" },
-        { user: "Carlos Mendes", time: "5 min", text: "Alguém já conseguiu falar com a Enel? Eles não atendem." },
-        { user: "Ana Paula", time: "12 min", text: "Estão dizendo que o problema é na subestação principal." },
-    ]);
+    const navigate = useNavigate();
+    const [posts, setPosts] = useState([]);
+    const [usuario, setUsuario] = useState(null);
 
-    // Estados para Denúncia (Reportar)
-    const [showReport, setShowReport] = useState(false);
-    const [reportReason, setReportReason] = useState("");
-    const [reportDetails, setReportDetails] = useState("");
+    const [upCountJoao, setUpCountJoao] = useState(20);
+    const [isUpvotedJoao, setIsUpvotedJoao] = useState(false);
 
-    //Estados do up
-    const [upCount, setUpCount] = useState(20);
-    const [isUpvoted, setIsUpvoted] = useState(false);   // Para mudar a cor
-
-    const handleUpvote = () => {
-        if (isUpvoted) {
-            setUpCount(prev => prev - 1);
-            setIsUpvoted(false);
-        } else {
-            setUpCount(prev => prev + 1);
-            setIsUpvoted(true);
-        }
-    };
-
-
-
-    const handleAddComment = () => {
-        if (newComment.trim() === "") return;
-        setComments([...comments, { user: "Você", time: "agora", text: newComment }]);
-        setNewComment("");
-    };
-
-    const handleSubmitReport = () => {
-        if (!reportReason) {
-            alert("Por favor, selecione um motivo para a denúncia.");
+    useEffect(() => {
+        const userLogged = JSON.parse(localStorage.getItem("usuarioLogado"));
+        if (!userLogged) {
+            navigate("/");
             return;
         }
-        alert(`✅ Denúncia enviada com sucesso!\nMotivo: ${reportReason}`);
-        setShowReport(false);
-        setReportReason("");
-        setReportDetails("");
+        setUsuario(userLogged);
+        fetchPosts();
+    }, []);
+
+    const fetchPosts = async () => {
+        try {
+            const response = await api.get("/posts");
+
+            setPosts(response.data);
+        } catch (error) {
+            console.error("Erro ao buscar posts:", error);
+        }
     };
 
+    const handleUpvoteJoao = () => {
+        setIsUpvotedJoao(!isUpvotedJoao);
+        setUpCountJoao(prev => isUpvotedJoao ? prev - 1 : prev + 1);
+    };
 
-
-
+    const inicialNome = usuario?.nomeUsuario ? usuario.nomeUsuario.charAt(0).toUpperCase() : "U";
 
     return (
         <div className="dashboard">
-
-            {/* SIDEBAR */}
             <aside className="sidebar">
                 <div>
-                    <div className="logoArea">
-                        <img src={logoEco} alt="EcoAlerta" />
-                    </div>
-
+                    <div className="logoArea"><img src={logoEco} alt="EcoAlerta" /></div>
                     <nav className="menu">
-                        <Link to="/inicial" className="menuItem activeMenu">
-                            <FaHome />
-                            <span>Tela inicial</span>
-                        </Link>
-                        <Link to="/registro" className="menuItem">
-                            <FaBell />
-                            <span>Registrar alerta</span>
-                        </Link>
-                        <button className="menuItem">
-                            <FaPhoneAlt />
-                            <span>Telefones úteis</span>
-                        </button>
-                        <button className="menuItem">
-                            <FaClipboardList />
-                            <span>Meus alertas</span>
-                        </button>
+                        <Link to="/inicial" className="menuItem activeMenu"><FaHome /><span>Tela inicial</span></Link>
+                        <Link to="/registro" className="menuItem"><FaBell /><span>Registrar alerta</span></Link>
+                        <button className="menuItem"><FaPhoneAlt /><span>Telefones úteis</span></button>
+                        <button className="menuItem"><FaClipboardList /><span>Meus alertas</span></button>
                     </nav>
                 </div>
-
                 <div className="bottomMenu">
-                    <button className="sairBtn">
-                        <FaSignOutAlt />
-                        <span>Sair</span>
+                    <button className="sairBtn" onClick={() => { localStorage.clear(); navigate("/") }}>
+                        <FaSignOutAlt /><span>Sair</span>
                     </button>
                 </div>
             </aside>
 
-            {/* MAIN CONTENT */}
             <main className="mainContent">
                 <header className="topbar">
                     <div className="searchBar">
                         <FaSearch />
-                        <input type="text" placeholder="Buscar alerta ou localização..." />
+                        <input type="text" placeholder="Buscar alerta..." />
                     </div>
                     <div className="rightTop">
                         <FaRegBell />
-                        <div className="avatar">M</div>
+                        <div className="avatar">{inicialNome}</div>
                     </div>
                 </header>
 
                 <div className="pageContent">
                     <section className="feed">
-                        <div className="alertCard">
+
+                        <div className="alertCard examplePost">
                             <div className="userHeader">
                                 <FaUserCircle className="userIcon" />
                                 <div>
-                                    <h3>João</h3>
+                                    <h3>João (Exemplo)</h3>
                                     <span>há 23 min · Vila Mariana, SP</span>
                                 </div>
                             </div>
-
-                            <p>
-                                Desde as 14h sem luz na Rua Domingos de Morais entre a Av. Jabaquara e Rua Vergueiro. Semáforos apagados, comércios fechando. Já liguei pra ENEL mas disseram que não há previsão de retorno.
-                            </p>
-
+                            <p>Desde as 14h sem luz na Rua Domingos de Morais...</p>
                             <div className="gallery">
                                 <img src={alerta1} alt="Alerta 1" />
                                 <img src={alerta2} alt="Alerta 2" />
                                 <img src={alerta3} alt="Alerta 3" />
                             </div>
-
                             <div className="actions">
-                                <div className="upvoteContainer" onClick={handleUpvote}>
-                                    <FaArrowCircleUp
-                                        className={`actionIcon upvoteIcon ${isUpvoted ? 'upvoted' : ''}`}
-                                    />
-                                    <span className="upvoteCount">{upCount}</span>
+                                <div className="upvoteContainer" onClick={handleUpvoteJoao}>
+                                    <FaArrowCircleUp className={`actionIcon upvoteIcon ${isUpvotedJoao ? 'upvoted' : ''}`} />
+                                    <span className="upvoteCount">{upCountJoao}</span>
                                 </div>
-                                <FaRegComment
-                                    className="actionIcon commentIcon"
-                                    onClick={() => setShowComments(true)}
-                                />
-                                <FaExclamationCircle
-                                    className="actionIcon danger"
-                                    onClick={() => setShowReport(true)}
-                                />
+                                <FaRegComment className="actionIcon commentIcon" />
+                                <FaExclamationCircle className="actionIcon danger" />
                             </div>
                         </div>
+
+                        <hr className="feedDivider" />
+                        <br />
+                        <h4 className="feedTitle">Alertas Recentes</h4>
+                        <br />
+
+                        {posts.length === 0 ? (
+                            <p className="emptyFeed">Nenhum alerta recente registrado.</p>
+                        ) : (
+                            posts.map(post => (
+                                <div className="alertCard" key={post.id}>
+                                    <div className="userHeader">
+                                        <FaUserCircle className="userIcon" />
+                                        <div>
+                                            <h3>{post.nomeAutor || "Usuário Anônimo"}</h3>
+
+                                            <span>{post.endereco ? `📍 ${post.endereco}` : "Localização não informada"}</span>
+                                        </div>
+                                    </div>
+
+                                    <p className="postDescricao">{post.descricao}</p>
+
+                                    <div className="actions">
+                                        <div className="upvoteContainer">
+                                            <FaArrowCircleUp className="actionIcon upvoteIcon" />
+                                            <span className="upvoteCount">{post.upvotesCount || 0}</span>
+                                        </div>
+                                        <FaRegComment className="actionIcon commentIcon" />
+                                        <FaExclamationCircle className="actionIcon danger" />
+                                    </div>
+                                </div>
+                            ))
+                        )}
                     </section>
 
                     <aside className="stats">
                         <div className="statBox">
-                            <small>Últimas 24h</small>
-                            <h2>8</h2>
-                            <span>Alertas</span>
+                            <small>Total de Alertas</small>
+                            <h2>{posts.length}</h2>
+                            <span>Relatos Reais</span>
                         </div>
                     </aside>
                 </div>
             </main>
-
-            {/* ==================== MODAL DE COMENTÁRIOS ==================== */}
-            {showComments && (
-                <div className="commentsModalOverlay" onClick={() => setShowComments(false)}>
-                    <div className="commentsModal" onClick={e => e.stopPropagation()}>
-                        <button className="closeModal" onClick={() => setShowComments(false)}>
-                            <FaTimes />
-                        </button>
-
-                        <div className="modalContent">
-                            <div className="modalPost">
-                                <div className="userHeader">
-                                    <FaUserCircle className="userIcon" />
-                                    <div>
-                                        <h3>João</h3>
-                                        <span>há 23 min · Vila Mariana, SP</span>
-                                    </div>
-                                </div>
-                                <p className="modalPostText">
-                                    Desde as 14h sem luz na Rua Domingos de Morais entre a Av. Jabaquara e Rua Vergueiro. Semáforos apagados, comércios fechando. Já liguei pra ENEL mas disseram que não há previsão de retorno.
-                                </p>
-                                <div className="modalGallery">
-                                    <img src={alerta1} alt="alerta" />
-                                </div>
-                            </div>
-
-                            <div className="commentsSection">
-                                <h3>Comentários ({comments.length})</h3>
-                                <div className="commentsList">
-                                    {comments.map((comment, index) => (
-                                        <div key={index} className="commentItem">
-                                            <strong>{comment.user}</strong>
-                                            <span className="commentTime"> · {comment.time}</span>
-                                            <p>{comment.text}</p>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="commentInputContainer">
-                                    <input
-                                        type="text"
-                                        value={newComment}
-                                        onChange={(e) => setNewComment(e.target.value)}
-                                        onKeyPress={(e) => e.key === 'Enter' && handleAddComment()}
-                                        placeholder="Escreva um comentário..."
-                                    />
-                                    <button onClick={handleAddComment}>Enviar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* ==================== MODAL DE DENÚNCIA ==================== */}
-            {showReport && (
-                <div className="reportModalOverlay" onClick={() => setShowReport(false)}>
-                    <div className="reportModal" onClick={e => e.stopPropagation()}>
-                        <button className="closeModal" onClick={() => setShowReport(false)}>
-                            <FaTimes />
-                        </button>
-
-                        <div className="reportContent">
-                            <h2>Denunciar Publicação</h2>
-                            <p className="reportSubtitle">Por favor, informe o motivo da denúncia:</p>
-
-                            <div className="reportOptions">
-                                {["Conteúdo impróprio", "Informação falsa", "Spam", "Discurso de ódio", "Violência", "Outro"].map((reason) => (
-                                    <label key={reason} className="reportOption">
-                                        <input
-                                            type="radio"
-                                            name="reportReason"
-                                            value={reason}
-                                            checked={reportReason === reason}
-                                            onChange={(e) => setReportReason(e.target.value)}
-                                        />
-                                        <span>{reason}</span>
-                                    </label>
-                                ))}
-                            </div>
-
-                            <textarea
-                                placeholder="Descreva o problema com mais detalhes (opcional)..."
-                                value={reportDetails}
-                                onChange={(e) => setReportDetails(e.target.value)}
-                                rows="4"
-                            />
-
-                            <div className="reportActions">
-                                <button className="cancelBtn" onClick={() => setShowReport(false)}>
-                                    Cancelar
-                                </button>
-                                <button className="submitReportBtn" onClick={handleSubmitReport}>
-                                    Enviar Denúncia
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
