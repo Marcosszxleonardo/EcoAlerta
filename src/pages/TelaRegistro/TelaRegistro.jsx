@@ -15,9 +15,41 @@ import {
 } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
 
 export default function TelaRegistro() {
+  const [localizacao, setLocalizacao] = useState(null);
+
+  async function pegarLocalizacao() {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        try {
+          const resposta = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+          );
+
+          const dados = await resposta.json();
+
+          setLocalizacao({
+            latitude,
+            longitude,
+            endereco: dados.display_name,
+          });
+
+        } catch (erro) {
+          console.log("Erro ao buscar endereço", erro);
+        }
+      },
+      (erro) => {
+        alert("Erro ao pegar localização");
+        console.log(erro);
+      }
+    );
+  }
+
   return (
     <div className="dashboard">
 
@@ -40,10 +72,10 @@ export default function TelaRegistro() {
               <span>Registrar alerta</span>
             </Link>
 
-            <Link to="/TelefonesUteis"className="menuItem">
+            <Link to="/TelefonesUteis" className="menuItem">
               <FaPhoneAlt />
               <span>Telefones úteis</span>
-             </Link>
+            </Link>
 
             <button className="menuItem">
               <FaClipboardList />
@@ -96,6 +128,12 @@ export default function TelaRegistro() {
                 </p>
               </div>
 
+
+              <button>
+                Enviar
+              </button>
+
+
             </div>
 
             <textarea
@@ -109,11 +147,18 @@ export default function TelaRegistro() {
 
             <div className="opcoes">
 
-              <div className="opcaoCard">
+              <div className="opcaoCard" onClick={pegarLocalizacao}>
 
                 <div className="iconeBox">
                   <FaMapMarkerAlt />
                 </div>
+
+                {localizacao && (
+                  <div className="localizacaoInfo">
+                    <p>{localizacao.endereco}</p>
+                  </div>
+                )}
+
 
                 <h3>Localização em tempo real</h3>
 

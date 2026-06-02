@@ -18,13 +18,14 @@ body {
    SIDEBAR
 ===================== */
 
-.sidebar > div:first-child {
+.sidebar>div:first-child {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
+
 .sidebar {
-    width: 230px;
+  width: 230px;
   background: #0c9c2d;
   display: flex;
   flex-direction: column;
@@ -46,7 +47,8 @@ body {
 
 .menu {
   padding-top: 20px;
-  flex: 1; /* Isso faz o menu crescer e empurrar o sair para baixo */
+  flex: 1;
+  /* Isso faz o menu crescer e empurrar o sair para baixo */
 }
 
 
@@ -103,7 +105,8 @@ body {
 
 /* Botão Sair - Fica no final */
 .bottomMenu {
-  margin-top: auto;        /* <-- Mais confiável que margin-bottom */
+  margin-top: auto;
+  /* <-- Mais confiável que margin-bottom */
   padding-bottom: 20px;
 }
 
@@ -269,13 +272,25 @@ textarea {
 
 .opcaoCard:hover {
   transform: translateY(-3px);
+  background-color: #00921f;
+  color: #fff;
+}
+
+/* MUDA O ÍCONE QUANDO O CARD RECEBE HOVER */
+.opcaoCard:hover .iconeBox svg {
+  color: #fff;
+}
+
+.opcaoCard:hover h3,
+.opcaoCard:hover p {
+  color: #fff;
 }
 
 .iconeBox {
   width: 85px;
   height: 85px;
   border-radius: 50%;
-  background: #eef8ef;
+  background: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -285,22 +300,23 @@ textarea {
 .iconeBox svg {
   font-size: 38px;
   color: #00921f;
+  transition: 0.25s;
 }
 
 .opcaoCard h3 {
   margin-top: 20px;
   color: #222;
+  transition: 0.25s;
 }
 
 .opcaoCard p {
   margin-top: 10px;
   color: #666;
   line-height: 1.5;
+  transition: 0.25s;
 }
 
-/* =====================
-   RESPONSIVO
-===================== */
+
 
 @media (max-width: 900px) {
   .opcoes {
