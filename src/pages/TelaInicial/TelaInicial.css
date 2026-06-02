@@ -637,6 +637,40 @@ body {
   background: #d62828;
 }
 
+
+
+/* Upvote */
+.upvoteContainer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.upvoteContainer:hover {
+    background: rgba(12, 156, 45, 0.08);
+}
+
+
+.upvoteCount {
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    min-width: 24px;
+    text-align: center;
+}
+
+/* Ajuste nas actions */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 22px;
+}
+
 /* Responsividade do Modal */
 @media (max-width: 950px) {
   .commentsModal {

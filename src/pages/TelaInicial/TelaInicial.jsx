@@ -37,6 +37,22 @@ export default function TelaInicial() {
     const [reportReason, setReportReason] = useState("");
     const [reportDetails, setReportDetails] = useState("");
 
+    //Estados do up
+    const [upCount, setUpCount] = useState(20);
+    const [isUpvoted, setIsUpvoted] = useState(false);   // Para mudar a cor
+
+    const handleUpvote = () => {
+        if (isUpvoted) {
+            setUpCount(prev => prev - 1);
+            setIsUpvoted(false);
+        } else {
+            setUpCount(prev => prev + 1);
+            setIsUpvoted(true);
+        }
+    };
+
+
+
     const handleAddComment = () => {
         if (newComment.trim() === "") return;
         setComments([...comments, { user: "Você", time: "agora", text: newComment }]);
@@ -53,6 +69,10 @@ export default function TelaInicial() {
         setReportReason("");
         setReportDetails("");
     };
+
+
+
+
 
     return (
         <div className="dashboard">
@@ -127,14 +147,19 @@ export default function TelaInicial() {
                             </div>
 
                             <div className="actions">
-                                <FaArrowCircleUp className="actionIcon" />
-                                <FaRegComment 
-                                    className="actionIcon commentIcon" 
-                                    onClick={() => setShowComments(true)} 
+                                <div className="upvoteContainer" onClick={handleUpvote}>
+                                    <FaArrowCircleUp
+                                        className={`actionIcon upvoteIcon ${isUpvoted ? 'upvoted' : ''}`}
+                                    />
+                                    <span className="upvoteCount">{upCount}</span>
+                                </div>
+                                <FaRegComment
+                                    className="actionIcon commentIcon"
+                                    onClick={() => setShowComments(true)}
                                 />
-                                <FaExclamationCircle 
-                                    className="actionIcon danger" 
-                                    onClick={() => setShowReport(true)} 
+                                <FaExclamationCircle
+                                    className="actionIcon danger"
+                                    onClick={() => setShowReport(true)}
                                 />
                             </div>
                         </div>
