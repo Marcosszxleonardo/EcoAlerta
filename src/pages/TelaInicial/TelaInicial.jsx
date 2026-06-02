@@ -16,43 +16,58 @@ import {
     FaArrowCircleUp,
     FaRegComment,
     FaExclamationCircle,
+    FaTimes,
 } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
+import { useState } from "react";     // ← Correto: vem do React
 
 export default function TelaInicial() {
+    const [showComments, setShowComments] = useState(false);
+    const [newComment, setNewComment] = useState("");
+    const [comments, setComments] = useState([
+        { user: "Maria Silva", time: "agora", text: "Que absurdo! Aqui em Moema também está sem luz há horas 😤" },
+        { user: "Carlos Mendes", time: "5 min", text: "Alguém já conseguiu falar com a Enel? Eles não atendem." },
+        { user: "Ana Paula", time: "12 min", text: "Estão dizendo que o problema é na subestação principal." },
+    ]);
+
+    const handleAddComment = () => {
+        if (newComment.trim() === "") return;
+        
+        setComments([...comments, {
+            user: "Você",
+            time: "agora",
+            text: newComment,
+        }]);
+        setNewComment("");
+    };
+
     return (
         <div className="dashboard">
-
+            {/* SIDEBAR */}
             <aside className="sidebar">
-
                 <div>
                     <div className="logoArea">
                         <img src={logoEco} alt="EcoAlerta" />
                     </div>
 
                     <nav className="menu">
-
-                        <Link to="/inicial" className="menuItem">
+                        <Link to="/inicial" className="menuItem activeMenu">
                             <FaHome />
                             <span>Tela inicial</span>
                         </Link>
-
                         <Link to="/registro" className="menuItem">
                             <FaBell />
                             <span>Registrar alerta</span>
                         </Link>
-
                         <button className="menuItem">
                             <FaPhoneAlt />
                             <span>Telefones úteis</span>
                         </button>
-
                         <button className="menuItem">
                             <FaClipboardList />
                             <span>Meus alertas</span>
                         </button>
-
                     </nav>
                 </div>
 
@@ -62,37 +77,26 @@ export default function TelaInicial() {
                         <span>Sair</span>
                     </button>
                 </div>
-
             </aside>
 
+            {/* MAIN */}
             <main className="mainContent">
-
                 <header className="topbar">
-
                     <div className="searchBar">
                         <FaSearch />
-                        <input
-                            type="text"
-                            placeholder="Buscar alerta ou localização..."
-                        />
+                        <input type="text" placeholder="Buscar alerta ou localização..." />
                     </div>
-
                     <div className="rightTop">
                         <FaRegBell />
                         <div className="avatar">M</div>
                     </div>
-
                 </header>
 
                 <div className="pageContent">
-
                     <section className="feed">
-
                         <div className="alertCard">
-
                             <div className="userHeader">
                                 <FaUserCircle className="userIcon" />
-
                                 <div>
                                     <h3>João</h3>
                                     <span>há 23 min · Vila Mariana, SP</span>
@@ -100,8 +104,7 @@ export default function TelaInicial() {
                             </div>
 
                             <p>
-                                Desde as 14h sem luz na Rua Domingos de Morais.
-                                Semáforos apagados e comércios fechando.
+                                Desde as 14h sem luz na Rua Domingos de Morais entre a Av. Jabaquara e Rua Vergueiro. Semáforos apagados, comércios fechando. Já liguei pra ENEL mas disseram que não há previsão de retorno.
                             </p>
 
                             <div className="gallery">
@@ -111,42 +114,78 @@ export default function TelaInicial() {
                             </div>
 
                             <div className="actions">
-                                <FaArrowCircleUp />
-                                <FaRegComment />
-                                <FaExclamationCircle className="danger" />
+                                <FaArrowCircleUp className="actionIcon" />
+                                <FaRegComment 
+                                    className="actionIcon commentIcon" 
+                                    onClick={() => setShowComments(true)} 
+                                />
+                                <FaExclamationCircle className="actionIcon danger" />
                             </div>
-
                         </div>
-
                     </section>
 
                     <aside className="stats">
-
                         <div className="statBox">
                             <small>Últimas 24h</small>
                             <h2>8</h2>
                             <span>Alertas</span>
                         </div>
-
-                        <div className="statBox">
-                            <small>Últimos 14 dias</small>
-                            <h2>12</h2>
-                            <span>Resolvidos</span>
-                        </div>
-
-                        <div className="statBox">
-                            <small>Regiões críticas</small>
-                            <h2>4</h2>
-                            <span>Hoje</span>
-                        </div>
-
                     </aside>
-
                 </div>
-
             </main>
 
+            {/* MODAL DE COMENTÁRIOS */}
+            {showComments && (
+                <div className="commentsModalOverlay" onClick={() => setShowComments(false)}>
+                    <div className="commentsModal" onClick={e => e.stopPropagation()}>
+                        <button className="closeModal" onClick={() => setShowComments(false)}>
+                            <FaTimes />
+                        </button>
+
+                        <div className="modalContent">
+                            <div className="modalPost">
+                                <div className="userHeader">
+                                    <FaUserCircle className="userIcon" />
+                                    <div>
+                                        <h3>João</h3>
+                                        <span>há 23 min · Vila Mariana, SP</span>
+                                    </div>
+                                </div>
+                                <p className="modalPostText">
+                                    Desde as 14h sem luz na Rua Domingos de Morais...
+                                </p>
+                                <div className="modalGallery">
+                                    <img src={alerta1} alt="alerta" />
+                                </div>
+                            </div>
+
+                            <div className="commentsSection">
+                                <h3>Comentários ({comments.length})</h3>
+                                <div className="commentsList">
+                                    {comments.map((comment, index) => (
+                                        <div key={index} className="commentItem">
+                                            <strong>{comment.user}</strong>
+                                            <span className="commentTime"> · {comment.time}</span>
+                                            <p>{comment.text}</p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="commentInputContainer">
+                                    <input
+                                        type="text"
+                                        value={newComment}
+                                        onChange={(e) => setNewComment(e.target.value)}
+                                        onKeyPress={(e) => e.key === 'Enter' && handleAddComment()}
+                                        placeholder="Escreva um comentário..."
+                                    />
+                                    <button onClick={handleAddComment}>Enviar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
-
