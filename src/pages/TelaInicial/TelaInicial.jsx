@@ -13,13 +13,45 @@ import {
     FaRegComment, FaExclamationCircle, FaTimes
 } from "react-icons/fa";
 
+// ... (mantenha os imports iguais)
+
 export default function TelaInicial() {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [usuario, setUsuario] = useState(null);
 
+    // Estados exclusivos para o post fixo do João
     const [upCountJoao, setUpCountJoao] = useState(20);
     const [isUpvotedJoao, setIsUpvotedJoao] = useState(false);
+
+    const handleUpvote = async (postId) => {
+        try {
+            const userLogged = JSON.parse(localStorage.getItem("usuarioLogado"));
+            if (!userLogged) return;
+
+            const response = await api.post(`/posts/${postId}/upvote`, {
+                usuarioId: userLogged.id
+            });
+
+            console.log("Dados recebidos do Back:", response.data);
+
+            setPosts(prevPosts =>
+                prevPosts.map(p => {
+                    if (p.id === postId) {
+                        // Verifique se o nome do campo no console é 'upvotesCount'
+                        return {
+                            ...p,
+                            upvotesCount: response.data.upvotescount,
+                            isUpvoted: !p.isUpvoted
+                        };
+                    }
+                    return p;
+                })
+            );
+        } catch (error) {
+            console.error("Erro ao atualizar upvote:", error);
+        }
+    };
 
     useEffect(() => {
         const userLogged = JSON.parse(localStorage.getItem("usuarioLogado"));
@@ -34,13 +66,13 @@ export default function TelaInicial() {
     const fetchPosts = async () => {
         try {
             const response = await api.get("/posts");
-
             setPosts(response.data);
         } catch (error) {
             console.error("Erro ao buscar posts:", error);
         }
     };
 
+    // Função de clique específica para o João (Exemplo)
     const handleUpvoteJoao = () => {
         setIsUpvotedJoao(!isUpvotedJoao);
         setUpCountJoao(prev => isUpvotedJoao ? prev - 1 : prev + 1);
@@ -50,14 +82,15 @@ export default function TelaInicial() {
 
     return (
         <div className="dashboard">
+            {/* ... Sidebar igual ... */}
             <aside className="sidebar">
                 <div>
                     <div className="logoArea"><img src={logoEco} alt="EcoAlerta" /></div>
                     <nav className="menu">
                         <Link to="/inicial" className="menuItem activeMenu"><FaHome /><span>Tela inicial</span></Link>
                         <Link to="/registro" className="menuItem"><FaBell /><span>Registrar alerta</span></Link>
-                        <button className="menuItem"><FaPhoneAlt /><span>Telefones úteis</span></button>
-                        <button className="menuItem"><FaClipboardList /><span>Meus alertas</span></button>
+                        <Link to="/TelefonesUteis" className="menuItem"><FaPhoneAlt /><span>Telefones úteis</span></Link>
+                        <Link to="/meus-alertas" className="menuItem"><FaClipboardList /><span>Meus alertas</span></Link>
                     </nav>
                 </div>
                 <div className="bottomMenu">
@@ -82,6 +115,8 @@ export default function TelaInicial() {
                 <div className="pageContent">
                     <section className="feed">
 
+                        {/* ================= POST EXEMPLO (FIXO) ================= */}
+                        {/* AQUI ESTAVA O ERRO: Substituí 'post.id' por 'handleUpvoteJoao' */}
                         <div className="alertCard examplePost">
                             <div className="userHeader">
                                 <FaUserCircle className="userIcon" />
@@ -98,7 +133,9 @@ export default function TelaInicial() {
                             </div>
                             <div className="actions">
                                 <div className="upvoteContainer" onClick={handleUpvoteJoao}>
-                                    <FaArrowCircleUp className={`actionIcon upvoteIcon ${isUpvotedJoao ? 'upvoted' : ''}`} />
+                                    <FaArrowCircleUp
+                                        className={`actionIcon upvoteIcon ${isUpvotedJoao ? 'upvoted' : ''}`}
+                                    />
                                     <span className="upvoteCount">{upCountJoao}</span>
                                 </div>
                                 <FaRegComment className="actionIcon commentIcon" />
@@ -111,6 +148,7 @@ export default function TelaInicial() {
                         <h4 className="feedTitle">Alertas Recentes</h4>
                         <br />
 
+                        {/* ================= LISTA DINÂMICA (DO BANCO) ================= */}
                         {posts.length === 0 ? (
                             <p className="emptyFeed">Nenhum alerta recente registrado.</p>
                         ) : (
@@ -120,7 +158,6 @@ export default function TelaInicial() {
                                         <FaUserCircle className="userIcon" />
                                         <div>
                                             <h3>{post.nomeAutor || "Usuário Anônimo"}</h3>
-
                                             <span>{post.endereco ? `📍 ${post.endereco}` : "Localização não informada"}</span>
                                         </div>
                                     </div>
@@ -128,8 +165,10 @@ export default function TelaInicial() {
                                     <p className="postDescricao">{post.descricao}</p>
 
                                     <div className="actions">
-                                        <div className="upvoteContainer">
-                                            <FaArrowCircleUp className="actionIcon upvoteIcon" />
+                                        <div className="upvoteContainer" onClick={() => handleUpvote(post.id)}>
+                                            <FaArrowCircleUp
+                                                className={`actionIcon upvoteIcon ${post.isUpvoted ? 'upvoted' : ''}`}
+                                            />
                                             <span className="upvoteCount">{post.upvotesCount || 0}</span>
                                         </div>
                                         <FaRegComment className="actionIcon commentIcon" />
