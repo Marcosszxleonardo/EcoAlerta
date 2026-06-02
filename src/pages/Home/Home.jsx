@@ -2,7 +2,7 @@ import "./Home.css";
 import logo from "../../logo/logoeco.png";
 import { Link } from "react-router-dom";
 
-function Home() {
+export default function Home() {
   return (
     <div className="home">
       <header className="header">
@@ -12,8 +12,8 @@ function Home() {
 
         <div className="headerButtons">
           <Link to="/login" className="btn">
-  Entrar
-</Link>
+            Entrar
+          </Link>
 
           <Link to="/cadastro" className="btn">
             Cadastrar
@@ -43,7 +43,7 @@ function Home() {
           ajudando comunidades a se manterem informadas e seguras.
         </p>
 
-        <h3>🎯 Objetivo do Projeto</h3>
+        <h3>Objetivo do Projeto</h3>
 
         <p>
           Propor uma solução digital colaborativa para auxiliar na comunicação
@@ -54,4 +54,3 @@ function Home() {
   );
 }
 
-export default Home;

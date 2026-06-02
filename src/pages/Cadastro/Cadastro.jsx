@@ -1,7 +1,7 @@
 import "./Cadastro.css";
 import logo from "../../logo/logoeco.png";
 
-function Cadastro() {
+export default function Cadastro() {
   return (
     <div className="cadastro">
       <div className="cardCadastro">
@@ -48,4 +48,3 @@ function Cadastro() {
   );
 }
 
-export default Cadastro;

@@ -16,7 +16,8 @@ import {
 
 import { Link } from "react-router-dom";
 
-function TelaRegistro() {
+
+export default function TelaRegistro() {
   return (
     <div className="dashboard">
 
@@ -39,10 +40,10 @@ function TelaRegistro() {
               <span>Registrar alerta</span>
             </Link>
 
-            <button className="menuItem">
+            <Link to="/TelefonesUteis"className="menuItem">
               <FaPhoneAlt />
               <span>Telefones úteis</span>
-            </button>
+             </Link>
 
             <button className="menuItem">
               <FaClipboardList />
@@ -148,4 +149,3 @@ function TelaRegistro() {
   );
 }
 
-export default TelaRegistro;

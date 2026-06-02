@@ -17,18 +17,19 @@ body {
 /* =====================
    SIDEBAR
 ===================== */
-
-.sidebar > div:first-child {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
 .sidebar {
-    width: 230px;
+  width: 230px;
   background: #0c9c2d;
   display: flex;
   flex-direction: column;
   height: 100vh;
+}
+
+/* Parte de cima (logo + menu) */
+.sidebar > div:first-child {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .logoArea {
@@ -48,7 +49,6 @@ body {
   padding-top: 20px;
   flex: 1; /* Isso faz o menu crescer e empurrar o sair para baixo */
 }
-
 
 .menuItem {
   width: 100%;
@@ -71,13 +71,15 @@ body {
 }
 
 .menuItem:hover,
-.menuItem.active {
+.menuItem.activeMenu {
   background: rgba(255, 255, 255, 0.15);
   border-left: 4px solid white;
 }
 
+/* Botão Sair - Fica no final */
 .bottomMenu {
-  margin-bottom: 120px;
+  margin-top: auto;        /* <-- Mais confiável que margin-bottom */
+  padding-bottom: 20px;
 }
 
 .sairBtn {
@@ -101,26 +103,15 @@ body {
   font-size: 20px;
 }
 
-/* Botão Sair - Fica no final */
-.bottomMenu {
-  margin-top: auto;        /* <-- Mais confiável que margin-bottom */
-  padding-bottom: 20px;
-}
-
 /* =====================
-   MAIN
+   MAIN + HEADER (mantido igual)
 ===================== */
-
 .mainContent {
   flex: 1;
   display: flex;
   flex-direction: column;
   background: #f2f4f7;
 }
-
-/* =====================
-   HEADER
-===================== */
 
 .topbar {
   height: 80px;
@@ -176,135 +167,79 @@ body {
   justify-content: center;
   align-items: center;
   font-weight: 700;
+  color: #333;
 }
 
 /* =====================
-   CONTEÚDO
+   TELEFONES ÚTEIS
 ===================== */
-
-.registroContainer {
+.telefonesContainer {
   padding: 30px;
+  flex: 1;
 }
 
-.registroCard {
+.telefonesCard {
   background: white;
   border: 1px solid #82c982;
   border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  padding: 35px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
 }
 
-/* =====================
-   USUÁRIO
-===================== */
-
-.userInfo {
+.telefonesTitulo {
   display: flex;
-  gap: 15px;
   align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
-.userIcon {
-  font-size: 48px;
-  color: #777;
+.telefonesTitulo svg {
+  font-size: 50px;
+  color: #0c9c2d;
 }
 
-.userInfo h2 {
+.telefonesTitulo h1 {
   color: #222;
-}
-
-.userInfo p {
-  color: #666;
-  margin-top: 4px;
-}
-
-/* =====================
-   TEXTAREA
-===================== */
-
-textarea {
-  width: 100%;
-  height: 220px;
-  margin-top: 25px;
-  resize: none;
-  border: 1px solid #ddd;
-  border-radius: 14px;
-  padding: 20px;
-  font-size: 15px;
-  outline: none;
-}
-
-.contador {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-  color: #777;
-  font-size: 14px;
+  font-size: 60px;
+  font-weight: 600;
 }
 
 .linha {
   height: 1px;
-  background: #dcdcdc;
-  margin: 30px 0;
+  background: #e0e0e0;
+  margin: 25px 0 30px 0;
 }
 
-/* =====================
-   OPÇÕES
-===================== */
-
-.opcoes {
+.telefoneItem {
+  padding: 18px 22px;
+  border: 1px solid #e9f0e9;
+  border-radius: 12px;
+  margin-bottom: 12px;
   display: flex;
-  gap: 25px;
-}
-
-.opcaoCard {
-  flex: 1;
-  border: 1px solid #82c982;
-  border-radius: 16px;
-  padding: 35px 25px;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.opcaoCard:hover {
-  transform: translateY(-3px);
-}
-
-.iconeBox {
-  width: 85px;
-  height: 85px;
-  border-radius: 50%;
-  background: #eef8ef;
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  margin: auto;
+  font-size: 17px;
+  transition: all 0.2s ease;
+  background: #fafcfc;
 }
 
-.iconeBox svg {
-  font-size: 38px;
-  color: #00921f;
+.telefoneItem:last-child {
+  margin-bottom: 0;
 }
 
-.opcaoCard h3 {
-  margin-top: 20px;
-  color: #222;
-}
-
-.opcaoCard p {
-  margin-top: 10px;
-  color: #666;
-  line-height: 1.5;
+.telefoneItem:hover {
+  background: #f0f8f0;
+  border-color: #82c982;
+  transform: translateX(5px);
 }
 
 /* =====================
    RESPONSIVO
 ===================== */
-
 @media (max-width: 900px) {
-  .opcoes {
-    flex-direction: column;
+  .telefonesCard {
+    padding: 25px;
   }
 }
 
@@ -315,6 +250,7 @@ textarea {
 
   .sidebar {
     width: 100%;
+    height: auto;
   }
 
   .topbar {
@@ -329,7 +265,7 @@ textarea {
     max-width: 100%;
   }
 
-  .registroContainer {
+  .telefonesContainer {
     padding: 15px;
   }
 }

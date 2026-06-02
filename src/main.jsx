@@ -13,6 +13,7 @@ import Cadastro from "./pages/Cadastro/Cadastro";
 import Login from "./pages/Login/Login";
 import TelaInicial from "./pages/TelaInicial/TelaInicial";
 import TelaRegistro from "./pages/TelaRegistro/TelaRegistro";
+import TelefonesUteis from "./pages/Telefones.jsx/TelefonesUteis";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         path: "/registro",
         element: <TelaRegistro />,
       },
+      {
+        path: "/TelefonesUteis",
+        element: <TelefonesUteis/>
+      }
     ],
   },
 ]);

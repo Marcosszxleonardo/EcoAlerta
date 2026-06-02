@@ -20,7 +20,7 @@ import {
 
 import { Link } from "react-router-dom";
 
-function TelaInicial() {
+export default function TelaInicial() {
     return (
         <div className="dashboard">
 
@@ -150,4 +150,3 @@ function TelaInicial() {
     );
 }
 
-export default TelaInicial;

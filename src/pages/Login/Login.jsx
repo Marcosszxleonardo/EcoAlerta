@@ -2,7 +2,7 @@ import "./Login.css";
 import logo from "../../logo/logoeco.png";
 import { Link, useNavigate } from "react-router-dom";
 
-function Login() {
+export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -56,5 +56,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;
