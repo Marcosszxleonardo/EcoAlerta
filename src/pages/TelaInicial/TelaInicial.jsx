@@ -29,9 +29,10 @@ export default function TelaInicial() {
     const [comments, setComments] = useState([
         { user: "Maria Silva", time: "agora", text: "Que absurdo! Aqui em Moema também está sem luz há horas 😤" },
         { user: "Carlos Mendes", time: "5 min", text: "Alguém já conseguiu falar com a Enel? Eles não atendem." },
+        { user: "Ana Paula", time: "12 min", text: "Estão dizendo que o problema é na subestação principal." },
     ]);
 
-    // Estados para Reportar
+    // Estados para Denúncia (Reportar)
     const [showReport, setShowReport] = useState(false);
     const [reportReason, setReportReason] = useState("");
     const [reportDetails, setReportDetails] = useState("");
@@ -55,6 +56,7 @@ export default function TelaInicial() {
 
     return (
         <div className="dashboard">
+
             {/* SIDEBAR */}
             <aside className="sidebar">
                 <div>
@@ -90,7 +92,7 @@ export default function TelaInicial() {
                 </div>
             </aside>
 
-            {/* MAIN */}
+            {/* MAIN CONTENT */}
             <main className="mainContent">
                 <header className="topbar">
                     <div className="searchBar">
@@ -114,7 +116,9 @@ export default function TelaInicial() {
                                 </div>
                             </div>
 
-                            <p>Desde as 14h sem luz na Rua Domingos de Morais entre a Av. Jabaquara e Rua Vergueiro. Semáforos apagados, comércios fechando. Já liguei pra ENEL mas disseram que não há previsão de retorno.</p>
+                            <p>
+                                Desde as 14h sem luz na Rua Domingos de Morais entre a Av. Jabaquara e Rua Vergueiro. Semáforos apagados, comércios fechando. Já liguei pra ENEL mas disseram que não há previsão de retorno.
+                            </p>
 
                             <div className="gallery">
                                 <img src={alerta1} alt="Alerta 1" />
@@ -146,16 +150,60 @@ export default function TelaInicial() {
                 </div>
             </main>
 
-            {/* ==================== MODAL COMENTÁRIOS ==================== */}
+            {/* ==================== MODAL DE COMENTÁRIOS ==================== */}
             {showComments && (
                 <div className="commentsModalOverlay" onClick={() => setShowComments(false)}>
                     <div className="commentsModal" onClick={e => e.stopPropagation()}>
-                        {/* ... (seu modal de comentários anterior) ... */}
+                        <button className="closeModal" onClick={() => setShowComments(false)}>
+                            <FaTimes />
+                        </button>
+
+                        <div className="modalContent">
+                            <div className="modalPost">
+                                <div className="userHeader">
+                                    <FaUserCircle className="userIcon" />
+                                    <div>
+                                        <h3>João</h3>
+                                        <span>há 23 min · Vila Mariana, SP</span>
+                                    </div>
+                                </div>
+                                <p className="modalPostText">
+                                    Desde as 14h sem luz na Rua Domingos de Morais entre a Av. Jabaquara e Rua Vergueiro. Semáforos apagados, comércios fechando. Já liguei pra ENEL mas disseram que não há previsão de retorno.
+                                </p>
+                                <div className="modalGallery">
+                                    <img src={alerta1} alt="alerta" />
+                                </div>
+                            </div>
+
+                            <div className="commentsSection">
+                                <h3>Comentários ({comments.length})</h3>
+                                <div className="commentsList">
+                                    {comments.map((comment, index) => (
+                                        <div key={index} className="commentItem">
+                                            <strong>{comment.user}</strong>
+                                            <span className="commentTime"> · {comment.time}</span>
+                                            <p>{comment.text}</p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="commentInputContainer">
+                                    <input
+                                        type="text"
+                                        value={newComment}
+                                        onChange={(e) => setNewComment(e.target.value)}
+                                        onKeyPress={(e) => e.key === 'Enter' && handleAddComment()}
+                                        placeholder="Escreva um comentário..."
+                                    />
+                                    <button onClick={handleAddComment}>Enviar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}
 
-            {/* ==================== MODAL REPORTAR ==================== */}
+            {/* ==================== MODAL DE DENÚNCIA ==================== */}
             {showReport && (
                 <div className="reportModalOverlay" onClick={() => setShowReport(false)}>
                     <div className="reportModal" onClick={e => e.stopPropagation()}>
