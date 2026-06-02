@@ -20,26 +20,37 @@ import {
 } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
-import { useState } from "react";     // ← Correto: vem do React
+import { useState } from "react";
 
 export default function TelaInicial() {
+    // Estados para Comentários
     const [showComments, setShowComments] = useState(false);
     const [newComment, setNewComment] = useState("");
     const [comments, setComments] = useState([
         { user: "Maria Silva", time: "agora", text: "Que absurdo! Aqui em Moema também está sem luz há horas 😤" },
         { user: "Carlos Mendes", time: "5 min", text: "Alguém já conseguiu falar com a Enel? Eles não atendem." },
-        { user: "Ana Paula", time: "12 min", text: "Estão dizendo que o problema é na subestação principal." },
     ]);
+
+    // Estados para Reportar
+    const [showReport, setShowReport] = useState(false);
+    const [reportReason, setReportReason] = useState("");
+    const [reportDetails, setReportDetails] = useState("");
 
     const handleAddComment = () => {
         if (newComment.trim() === "") return;
-        
-        setComments([...comments, {
-            user: "Você",
-            time: "agora",
-            text: newComment,
-        }]);
+        setComments([...comments, { user: "Você", time: "agora", text: newComment }]);
         setNewComment("");
+    };
+
+    const handleSubmitReport = () => {
+        if (!reportReason) {
+            alert("Por favor, selecione um motivo para a denúncia.");
+            return;
+        }
+        alert(`✅ Denúncia enviada com sucesso!\nMotivo: ${reportReason}`);
+        setShowReport(false);
+        setReportReason("");
+        setReportDetails("");
     };
 
     return (
@@ -103,9 +114,7 @@ export default function TelaInicial() {
                                 </div>
                             </div>
 
-                            <p>
-                                Desde as 14h sem luz na Rua Domingos de Morais entre a Av. Jabaquara e Rua Vergueiro. Semáforos apagados, comércios fechando. Já liguei pra ENEL mas disseram que não há previsão de retorno.
-                            </p>
+                            <p>Desde as 14h sem luz na Rua Domingos de Morais entre a Av. Jabaquara e Rua Vergueiro. Semáforos apagados, comércios fechando. Já liguei pra ENEL mas disseram que não há previsão de retorno.</p>
 
                             <div className="gallery">
                                 <img src={alerta1} alt="Alerta 1" />
@@ -119,7 +128,10 @@ export default function TelaInicial() {
                                     className="actionIcon commentIcon" 
                                     onClick={() => setShowComments(true)} 
                                 />
-                                <FaExclamationCircle className="actionIcon danger" />
+                                <FaExclamationCircle 
+                                    className="actionIcon danger" 
+                                    onClick={() => setShowReport(true)} 
+                                />
                             </div>
                         </div>
                     </section>
@@ -134,53 +146,56 @@ export default function TelaInicial() {
                 </div>
             </main>
 
-            {/* MODAL DE COMENTÁRIOS */}
+            {/* ==================== MODAL COMENTÁRIOS ==================== */}
             {showComments && (
                 <div className="commentsModalOverlay" onClick={() => setShowComments(false)}>
                     <div className="commentsModal" onClick={e => e.stopPropagation()}>
-                        <button className="closeModal" onClick={() => setShowComments(false)}>
+                        {/* ... (seu modal de comentários anterior) ... */}
+                    </div>
+                </div>
+            )}
+
+            {/* ==================== MODAL REPORTAR ==================== */}
+            {showReport && (
+                <div className="reportModalOverlay" onClick={() => setShowReport(false)}>
+                    <div className="reportModal" onClick={e => e.stopPropagation()}>
+                        <button className="closeModal" onClick={() => setShowReport(false)}>
                             <FaTimes />
                         </button>
 
-                        <div className="modalContent">
-                            <div className="modalPost">
-                                <div className="userHeader">
-                                    <FaUserCircle className="userIcon" />
-                                    <div>
-                                        <h3>João</h3>
-                                        <span>há 23 min · Vila Mariana, SP</span>
-                                    </div>
-                                </div>
-                                <p className="modalPostText">
-                                    Desde as 14h sem luz na Rua Domingos de Morais...
-                                </p>
-                                <div className="modalGallery">
-                                    <img src={alerta1} alt="alerta" />
-                                </div>
+                        <div className="reportContent">
+                            <h2>Denunciar Publicação</h2>
+                            <p className="reportSubtitle">Por favor, informe o motivo da denúncia:</p>
+
+                            <div className="reportOptions">
+                                {["Conteúdo impróprio", "Informação falsa", "Spam", "Discurso de ódio", "Violência", "Outro"].map((reason) => (
+                                    <label key={reason} className="reportOption">
+                                        <input
+                                            type="radio"
+                                            name="reportReason"
+                                            value={reason}
+                                            checked={reportReason === reason}
+                                            onChange={(e) => setReportReason(e.target.value)}
+                                        />
+                                        <span>{reason}</span>
+                                    </label>
+                                ))}
                             </div>
 
-                            <div className="commentsSection">
-                                <h3>Comentários ({comments.length})</h3>
-                                <div className="commentsList">
-                                    {comments.map((comment, index) => (
-                                        <div key={index} className="commentItem">
-                                            <strong>{comment.user}</strong>
-                                            <span className="commentTime"> · {comment.time}</span>
-                                            <p>{comment.text}</p>
-                                        </div>
-                                    ))}
-                                </div>
+                            <textarea
+                                placeholder="Descreva o problema com mais detalhes (opcional)..."
+                                value={reportDetails}
+                                onChange={(e) => setReportDetails(e.target.value)}
+                                rows="4"
+                            />
 
-                                <div className="commentInputContainer">
-                                    <input
-                                        type="text"
-                                        value={newComment}
-                                        onChange={(e) => setNewComment(e.target.value)}
-                                        onKeyPress={(e) => e.key === 'Enter' && handleAddComment()}
-                                        placeholder="Escreva um comentário..."
-                                    />
-                                    <button onClick={handleAddComment}>Enviar</button>
-                                </div>
+                            <div className="reportActions">
+                                <button className="cancelBtn" onClick={() => setShowReport(false)}>
+                                    Cancelar
+                                </button>
+                                <button className="submitReportBtn" onClick={handleSubmitReport}>
+                                    Enviar Denúncia
+                                </button>
                             </div>
                         </div>
                     </div>
