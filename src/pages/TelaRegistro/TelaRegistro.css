@@ -349,3 +349,55 @@ textarea {
     padding: 15px;
   }
 }
+
+.postHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.userInfo {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.enviarBtn {
+    background: #0c9c2d;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    align-self: center;
+}
+
+.enviarBtn:hover {
+    background: #0a8a26;
+    transform: translateY(-2px);
+}
+
+/* Ajuste no espaçamento da textarea */
+textarea {
+    width: 100%;
+    height: 180px;
+    margin-top: 10px;
+    resize: none;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 18px;
+    font-size: 16px;
+    outline: none;
+}
+
+.contador {
+    display: block;
+    text-align: right;
+    margin-top: 8px;
+    color: #777;
+    font-size: 14px;
+}
